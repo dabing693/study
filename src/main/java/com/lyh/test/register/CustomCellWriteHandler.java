@@ -7,12 +7,11 @@ import com.alibaba.excel.util.CollectionUtils;
 import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.style.column.AbstractColumnWidthStyleStrategy;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomCellWriteHandler extends AbstractColumnWidthStyleStrategy {
 
@@ -28,9 +27,16 @@ public class CustomCellWriteHandler extends AbstractColumnWidthStyleStrategy {
             if (maxColumnWidthMap == null) {
                 maxColumnWidthMap = new HashMap<>();
                 CACHE.put(writeSheetHolder.getSheetNo(), maxColumnWidthMap);
+            }else{
+                int minWidth= Collections.min(maxColumnWidthMap.values());
+                for(Integer k:maxColumnWidthMap.keySet()){
+                    maxColumnWidthMap.put(k,minWidth);
+                }
+                System.out.println("map:"+maxColumnWidthMap);
             }
 
             Integer columnWidth = this.dataLength(cellDataList, cell, isHead);
+            System.out.println(columnWidth+"\t"+cellDataList.get(0).getStringValue());
             if (columnWidth >= 0) {
                 if (columnWidth > 255) {
                     columnWidth = 255;
@@ -44,6 +50,12 @@ public class CustomCellWriteHandler extends AbstractColumnWidthStyleStrategy {
 
             }
         }
+
+        /*
+        Sheet sheet = writeSheetHolder.getSheet();
+        sheet.setColumnWidth(cell.getColumnIndex(), 4000);
+        //System.out.println(cellDataList.get(0).getStringValue());
+         */
     }
 
     private Integer dataLength(List<CellData> cellDataList, Cell cell, Boolean isHead) {

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 //@HeadRowHeight(24)
 @AllArgsConstructor
-public class Table0 extends BaseRowModel {
+public class Table0{
     @ExcelProperty(value = " ",index = 0)
     private String col0;
 
@@ -48,6 +48,7 @@ public class Table0 extends BaseRowModel {
     public static List<Table0> getData(){
         List<Table0> data=new ArrayList<>();
         String[] col={
+                "普通电子发票汇总表",
                 "制表日期：",
                 "所属期间：",
                 "declareTaxInfo.getSubTitle()",
@@ -58,9 +59,9 @@ public class Table0 extends BaseRowModel {
                 "",
                 "★ 发票领用存情况 ★"
         };
-        String ext[][]={{"col0","col1","col2","col3","col4"},
+        String ext[][]={{"分配发票份数","分配发票份数","分配发票份数","分配发票份数","分配发票份数"},
                 {"99","0","9","8","0"},
-                {"col5","col6","col7","col8","col9"},
+                {"分配发票份数","分配发票份数","分配发票份数","分配发票份数","分配发票份数"},
                 {"199","0","0","8","0"}};
 
         Arrays.stream(col).forEach(i->{
@@ -68,6 +69,43 @@ public class Table0 extends BaseRowModel {
         });
         Arrays.stream(ext).forEach(i->{
             data.add(new Table0(i[0],i[1],i[2],i[3],i[4]));
+        });
+        return data;
+    }
+
+    public static List<List<String>> getData2(){
+        List<List<String>> data=new ArrayList<>();
+        String[] col={
+                "普通电子发票汇总表",
+                "制表日期：",
+                "所属期间：",
+                "declareTaxInfo.getSubTitle()",
+                "declareTaxInfo.getSubTitle2()",
+                "纳税人登记号：",
+                "企业名称：",
+                "地址电话：",
+                "",
+                "★ 发票领用存情况 ★"
+        };
+        String ext[][]={{"分配发票份数","分配发票份数","分配发票份数","分配发票份数","分配发票份数"},
+                {"99","0","9","8","0"},
+                {"分配发票份数","分配发票份数","分配发票份数","分配发票份数","分配发票份数"},
+                {"199","0","0","8","0"}};
+
+        Arrays.stream(col).forEach(i->{
+            List<String> t=new ArrayList<>();
+            t.add(i);
+//            for(int j=0;j<4;j++){
+//                t.add(j+"00000");
+//            }
+            data.add(t);
+        });
+        Arrays.stream(ext).forEach(i->{
+            List<String> t=new ArrayList<>();
+            for(String s:i){
+                t.add(s);
+            }
+            data.add(t);
         });
         return data;
     }

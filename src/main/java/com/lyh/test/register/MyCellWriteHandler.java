@@ -21,26 +21,17 @@ public class MyCellWriteHandler implements CellWriteHandler {
         Workbook workbook = writeSheetHolder.getSheet().getWorkbook();
         CellStyle cellStyle = workbook.createCellStyle();
         if(cell.getRowIndex()==0){
-            System.out.println("afterCellCreate: "+cell.getRowIndex());
             Font cellFont = workbook.createFont();
-            cellFont.setFontHeight((short) 24);
-            cellFont.setBold(true);
+            cellFont.setFontHeight((short) 280);
             cellStyle.setFont(cellFont);
-
-            cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-            cell.setCellStyle(cellStyle);
+            cellStyle.setAlignment(HorizontalAlignment.CENTER);
         }
-        if (cell.getRowIndex() == 10) {
-            System.out.println("afterCellCreate: "+cell.getRowIndex());
-            Font cellFont = workbook.createFont();
-            cellFont.setBold(true);
-            cellStyle.setFont(cellFont);
+
+        if (cell.getRowIndex() == 10||cell.getRowIndex() == 12) {
             cellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            cell.setCellStyle(cellStyle);
         }
+        cell.setCellStyle(cellStyle);
     }
 
     @Override

@@ -34,48 +34,32 @@ public class Test {
             MyMergeStrategy myMergeStrategy = new MyMergeStrategy(cellRangeAddresses);
 
             WriteTable writeTable=EasyExcel.writerTable(0)
-                    .head(Table0.getHead())
-                    .registerWriteHandler(myMergeStrategy)
-                    //.registerWriteHandler(getWriteCellStyleOfTable0())
                     .registerWriteHandler(new MyCellWriteHandler())
-                    .needHead(true)
+                    .registerWriteHandler(myMergeStrategy)
+                    .registerWriteHandler(new CustomCellWriteHandler())
+                    //.registerWriteHandler(getWriteCellStyleOfTable0())
+                    .needHead(false)
                     .build();
 
             WriteTable writeTable1=EasyExcel.writerTable(1).head(Table1.class)
                     .registerWriteHandler(getWriteCellStyle())
                     .registerWriteHandler(new CustomCellWriteHandler()).needHead(true).build();
 
-            excelWriter.write(Table0.getData(),writeSheet,writeTable);
+
+            excelWriter.write(Table0.getData2(),writeSheet,writeTable);
+            System.out.println(writeSheet.getColumnWidthMap());
             //excelWriter.write(getTable1(),writeSheet,writeTable1);
         }finally {
             if (excelWriter!=null){
                 excelWriter.finish();
             }
         }
-        /*
-        StyleExcelHandler handler = new StyleExcelHandler();
-        OutputStream outputStream = new FileOutputStream("D://2007.xlsx");
-        // 这里要把上面创建的样式类通过构造函数传入
-        ExcelWriter writer = new ExcelWriter(null, outputStream, ExcelTypeEnum.XLSX, true, (WriteHandler) handler);
-        Sheet sheet1 = new Sheet(1, 1, Table0.class, "含供应商和地区", null);
-        //设置列宽 设置每列的宽度
-        Map columnWidth = new HashMap();
-        columnWidth.put(0,10000);columnWidth.put(1,10000);columnWidth.put(2,10000);columnWidth.put(3,10000);
-        sheet1.setColumnWidthMap(columnWidth);
-        //或自适应宽度
-        //sheet1.setAutoWidth(true);
-
-        writer.write(Table0.getData(), sheet1);
-        writer.finish();
-        outputStream.close();
-
-         */
     }
     private static  List<CellRangeAddress> getCellRangeAddressList(){
         List<CellRangeAddress> cellRangeAddress = new ArrayList<>();
 
-        for(int i=0;i<7;i++){
-            CellRangeAddress item = new CellRangeAddress(i+1, i+1, 0, 4);
+        for(int i=0;i<8;i++){
+            CellRangeAddress item = new CellRangeAddress(i, i, 0, 4);
             cellRangeAddress.add(item);
         }
         cellRangeAddress.add(new CellRangeAddress(9, 9, 0, 4));
